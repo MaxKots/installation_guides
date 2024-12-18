@@ -41,7 +41,7 @@
 ***Открываем <ins>новый терминал</ins> и запускаем Kafka командой:***  
 ```bin/kafka-server-start.sh config/server.properties```
 
-***Для остановки <int>в отдельном терминале</int> выполянем:***  
+***Для остановки <ins>в отдельном терминале</ins> выполянем:***  
 
   Для остановки Kafka:  
   ```bin/kafka-server-stop.sh```  
