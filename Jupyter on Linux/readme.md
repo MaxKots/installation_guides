@@ -51,7 +51,9 @@ free -h
 ```
 
 ## Установка Docker (если не установлен)
-Для Ubuntu/Debian:
+
+<details>
+<summary><b>Для Ubuntu/Debian</b></summary>
 
 ```bash
 
@@ -79,8 +81,11 @@ newgrp docker
 docker --version
 docker compose version
 ```
+</details>
+  
+<details>
+<summary><b>Для CentOS/RHEL</b></summary>
 
-Для CentOS/RHEL:
 ```bash
 
 # Установка зависимостей
@@ -100,9 +105,10 @@ sudo systemctl enable docker
 sudo usermod -aG docker \$USER
 newgrp docker
 ```
+</details>
 
 ## Первый запуск JupyterLab + Spark
-Шаг 1: Создание рабочей структуры
+### Шаг 1: Создание рабочей структуры
 ```bash
 
 # Создаем основную директорию
@@ -116,7 +122,7 @@ mkdir -p notebooks data workspace config logs
 mkdir -p projects/{pyspark_examples,scala_examples,data_analysis}
 ```
 
-Шаг 2: Загрузка образа Jupyter со Spark
+### Шаг 2: Загрузка образа Jupyter со Spark
 ```bash
 
 # Просмотр доступных тегов
@@ -129,8 +135,11 @@ docker pull jupyter/all-spark-notebook:x86_64-ubuntu-22.04
 docker images | grep jupyter
 ```
 
-Шаг 3: Запуск контейнера с правильными параметрами
-Вариант A: Базовый запуск (рекомендуется для начала)
+### Шаг 3: Запуск контейнера с правильными параметрами
+
+<details>
+<summary><b>Вариант A: Базовый запуск (рекомендуется для начала)</b></summary>
+
 ```bash
 
 # Останавливаем старые контейнеры с таким же именем (если есть)
@@ -152,8 +161,11 @@ docker run -d \
   --restart unless-stopped \
   jupyter/all-spark-notebook:x86_64-ubuntu-22.04
 ```
+</details>
 
-Вариант B: Расширенный запуск (с правами root и настройками)
+<details>
+<summary><b>Вариант B: Расширенный запуск (с правами root и настройками)</b></summary>
+
 ```bash
 
 # Удалить старый контейнер если существует
@@ -186,8 +198,11 @@ docker run -d \
   --restart unless-stopped \
   jupyter/all-spark-notebook:x86_64-ubuntu-22.04
 ```
+</details>
 
-Вариант C: Использование Docker Compose
+<details>
+<summary><b>Вариант C: Использование Docker Compose</b></summary>
+  
 ```bash
 
 # Создание docker-compose.yml
@@ -224,12 +239,16 @@ services:
         limits:
           memory: 4G
           cpus: '2.0'
+EOF
+```
+</details>
+
+#### Запуск через docker-compose
+```
+docker-compose up -d
 ```
 
-# Запуск через docker-compose
-docker-compose up -d
-
-Шаг 4: Получение токена для первого входа
+### Шаг 4: Получение токена для первого входа
 ```bash
 
 # Ожидание нескольких секунд для полного запуска
@@ -248,18 +267,15 @@ docker exec JupyterLab jupyter server list
 docker logs -f JupyterLab 2>&1 | grep --line-buffered "token"
 ```
 
-Шаг 5: Доступ к JupyterLab
-
-    Открой браузер
-
-    Введи один из URL из логов, например:
+### Шаг 5: Доступ к JupyterLab
+Открой браузер и введи один из URL из логов, например:
     
 ```text
 http://localhost:8888/lab?token=TOKEN
 ```
-    Или перейди по адресу http://localhost:8888 и введи токен вручную
+Или перейди по адресу http://localhost:8888 и введи токен вручную
 
-Шаг 6: Проверка работы Spark
+### Шаг 6: Проверка работы Spark
 
 Создайте новый ноутбук с ядром Python 3 и выполните:
 ```python
@@ -287,12 +303,15 @@ print(f"Count: {df_count}")
 print(f"Spark version: {spark.version}")
 print(f"Python version: {spark.sparkContext.pythonVer}")
 
-# Не забудьте остановить сессию после работы
+# Не забудь остановить сессию после работы
 # spark.stop()
 ```
 
 ## Запуск существующего контейнера
-Если контейнер уже создан и остановлен:
+
+<details>
+  <summary><b>Если контейнер уже создан и остановлен</b></summary>
+
 ```bash
 
 # Способ 1: Простой запуск
@@ -306,13 +325,16 @@ if docker ps -a | grep -q "JupyterLab"; then
     echo "Запуск существующего контейнера JupyterLab..."
     docker start JupyterLab
     echo "URL для доступа: http://localhost:8888"
-    echo "Для получения токена выполните: docker logs JupyterLab | grep token"
+    echo "Для получения токена выполни: docker logs JupyterLab | grep token"
 else
-    echo "Контейнер JupyterLab не найден. Создайте новый."
+    echo "Контейнер JupyterLab не найден. Создай новый."
 fi
 ```
+</details>
 
-Если контейнер работает:
+<details>
+  <summary><b>Если контейнер работает</b></summary>
+
 ```bash
 
 # Проверка статуса
@@ -324,8 +346,11 @@ docker exec JupyterLab jupyter server list
 # Перезагрузка контейнера (если нужно)
 docker restart JupyterLab
 ```
+</details>
 
-Автоматический скрипт для запуска:
+<details>
+  <summary><b>Автоматический скрипт для запуска</b></summary>
+
 ```bash
 
 #!/bin/bash
@@ -358,7 +383,7 @@ if docker ps -a --format '{{.Names}}' | grep -q "^\${CONTAINER_NAME}\$"; then
 else
     echo "Создание нового контейнера \${CONTAINER_NAME}..."
     
-    # Запуска нового контейнера
+    # Запуск нового контейнера
     docker run -d \\
         --name "\${CONTAINER_NAME}" \\
         -p 8888:8888 \\
@@ -379,6 +404,63 @@ fi
 
 # Сделать скрипт исполняемым
 chmod +x ~/bin/jupyter-start.sh
+```
+</details>
+
+## Работа с JupyterLab
+<details>
+  <summary><b>  Типы ядер</b></summary>
+
+        Python 3 (ipykernel) - для Python с поддержкой Spark
+
+        Apache Toree - Scala - для Scala с поддержкой Spark
+
+        R - для R с поддержкой Spark
+</details>
+
+<details>
+  <summary><b>  Типы ячеек</b></summary>
+
+    Code (Код): Для исполняемого кода
+
+    Markdown: Для документации и текста
+
+    Raw (Текст): Неформатированный текст
+</details>
+
+<details>
+  <summary><b>  Основные горячие клавиши</b></summary>
+    Shift + Enter: Выполнить ячейку и перейти к следующей
+  
+    Ctrl + Enter: Выполнить ячейку 
+    
+    Alt + Enter: Выполнить ячейку и создать новую снизу
+    
+    Esc: Выйти из режима редактирования
+    
+    A: Добавить ячейку сверху
+    
+    B: Добавить ячейку снизу
+    
+    D, D: Удалить ячейку (дважды нажать D)
+    
+    M: Преобразовать в Markdown ячейку
+    
+    Y: Преобразовать в Code ячейку
+    
+    Ctrl + S: Сохранить ноутбук
+</details>
+
+### Установка дополнительных пакетов
+```bash
+# В терминале JupyterLab или через docker exec
+pip install pandas numpy matplotlib seaborn plotly scikit-learn
+
+# Или из ноутбука
+!pip install package_name
+
+# Установка для всех пользователей (требует прав root)
+!pip install --user package_name
 ```
 
 ## Генерация и настройка токенов/паролей
@@ -571,7 +653,7 @@ results.show()
 
 Доступ к Spark UI:
 
-После запуска Spark приложения откройте в браузере:
+После запуска Spark приложения открой в браузере:
 
     http://localhost:4040 - интерфейс текущего приложения
 
@@ -870,15 +952,15 @@ source ~/.bashrc
 
 ## Рекомендации по использованию:
 
-    Для разработки: используйте вариант B с правами root для установки дополнительных пакетов
+    Для разработки: используй вариант B с правами root для установки дополнительных пакетов
 
-    Для production: используйте вариант A с ограниченными правами
+    Для production: используй вариант A с ограниченными правами
 
-    Для team работы: рассмотрите JupyterHub вместо JupyterLab
+    Для team работы: рассмотри JupyterHub вместо JupyterLab
 
-    Для больших данных: увеличьте лимиты памяти и CPU
+    Для больших данных: увеличь лимиты памяти и CPU
 
-    Для сохранности данных: регулярно делайте бэкапы томов
+    Для сохранности данных: регулярно делай бэкапы томов
 
 ## Поддержка и обновления:
 
