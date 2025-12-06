@@ -50,6 +50,8 @@ df -h /
 free -h
 ```
 
+---
+
 ## Установка Docker (если не установлен)
 
 <details>
@@ -106,6 +108,8 @@ sudo usermod -aG docker \$USER
 newgrp docker
 ```
 </details>
+
+---
 
 ## Первый запуск JupyterLab + Spark
 ### Шаг 1: Создание рабочей структуры
@@ -179,17 +183,17 @@ docker run -d \
   -p 4040:4040 \
   -p 4041:4041 \
   -p 7077:7077 \
-  -v \$(pwd)/notebooks:/home/jovyan/work \
-  -v \$(pwd)/data:/home/jovyan/data \
-  -v \$(pwd)/workspace:/home/jovyan/workspace \
-  -v \$(pwd)/config:/home/jovyan/.jupyter \
-  -v \$(pwd)/logs:/var/log/jupyter \
+  -v $(pwd)/notebooks:/home/jovyan/work \
+  -v $(pwd)/data:/home/jovyan/data \
+  -v $(pwd)/workspace:/home/jovyan/workspace \
+  -v $(pwd)/config:/home/jovyan/.jupyter \
+  -v $(pwd)/logs:/var/log/jupyter \
   -e JUPYTER_ENABLE_LAB=yes \
   -e GRANT_SUDO=yes \
   -e CHOWN_HOME=yes \
   -e CHOWN_HOME_OPTS=-R \
-  -e NB_UID=\$(id -u) \
-  -e NB_GID=\$(id -g) \
+  -e NB_UID=$(id -u) \
+  -e NB_GID=$(id -g) \
   -e SPARK_OPTS="--driver-memory 2G --executor-memory 2G" \
   --user root \
   --memory="4g" \
@@ -307,6 +311,8 @@ print(f"Python version: {spark.sparkContext.pythonVer}")
 # spark.stop()
 ```
 
+---
+
 ## Запуск существующего контейнера
 
 <details>
@@ -407,6 +413,8 @@ chmod +x ~/bin/jupyter-start.sh
 ```
 </details>
 
+---
+
 ## Работа с JupyterLab
 <details>
   <summary><b>  Типы ядер</b></summary>
@@ -451,6 +459,8 @@ chmod +x ~/bin/jupyter-start.sh
     Ctrl + S: Сохранить ноутбук
 </details>
 
+---
+
 ### Установка дополнительных пакетов
 ```bash
 # В терминале JupyterLab или через docker exec
@@ -462,6 +472,8 @@ pip install pandas numpy matplotlib seaborn plotly scikit-learn
 # Установка для всех пользователей (требует прав root)
 !pip install --user package_name
 ```
+
+---
 
 ## Генерация и настройка токенов/паролей
 Генерация нового токена:
@@ -567,6 +579,8 @@ EOF
 
 chmod +x ~/jupyter_projects/start_jupyter_with_token.sh
 ```
+
+---
 
 ## Работа с Apache Spark
 Настройка Spark в контейнере:
@@ -765,6 +779,8 @@ esac
 chmod +x ~/bin/jupyter-manage.sh
 ```
 
+---
+
 ## Решение проблем
 Частые проблемы и решения:
 1. Порт 8888 уже используется
@@ -846,6 +862,8 @@ docker run -d \\
   jupyter/all-spark-notebook:x86_64-ubuntu-22.04
 ```
 
+---
+
 ## Полная очистка
 Удаление контейнера и данных:
 ```bash
@@ -912,6 +930,8 @@ echo "alias jup-token='docker exec JupyterLab jupyter server list 2>/dev/null | 
 
 source ~/.bashrc
 ```
+
+---
 
 # Дополнительная информация
 ## Источники и ссылки:
