@@ -50,7 +50,7 @@ df -h /
 free -h
 ```
 
-Установка Docker (если не установлен)
+## Установка Docker (если не установлен)
 Для Ubuntu/Debian:
 
 ```bash
@@ -101,7 +101,7 @@ sudo usermod -aG docker \$USER
 newgrp docker
 ```
 
-Первый запуск JupyterLab + Spark
+## Первый запуск JupyterLab + Spark
 Шаг 1: Создание рабочей структуры
 ```bash
 
@@ -291,7 +291,7 @@ print(f"Python version: {spark.sparkContext.pythonVer}")
 # spark.stop()
 ```
 
-Запуск существующего контейнера
+## Запуск существующего контейнера
 Если контейнер уже создан и остановлен:
 ```bash
 
@@ -381,7 +381,7 @@ fi
 chmod +x ~/bin/jupyter-start.sh
 ```
 
-Генерация и настройка токенов/паролей
+## Генерация и настройка токенов/паролей
 Генерация нового токена:
 ```bash
 
@@ -486,7 +486,7 @@ EOF
 chmod +x ~/jupyter_projects/start_jupyter_with_token.sh
 ```
 
-Работа с Apache Spark
+## Работа с Apache Spark
 Настройка Spark в контейнере:
 ```bash
 
@@ -577,7 +577,7 @@ results.show()
 
     http://localhost:4041 - интерфейс для следующего приложения
 
-Управление контейнерами
+## Управление контейнерами
 Основные команды:
 ```bash
 
@@ -683,7 +683,7 @@ esac
 chmod +x ~/bin/jupyter-manage.sh
 ```
 
-Решение проблем
+## Решение проблем
 Частые проблемы и решения:
 1. Порт 8888 уже используется
 ```bash
@@ -764,7 +764,7 @@ docker run -d \\
   jupyter/all-spark-notebook:x86_64-ubuntu-22.04
 ```
 
-Полная очистка
+## Полная очистка
 Удаление контейнера и данных:
 ```bash
 
