@@ -606,19 +606,16 @@ exit
 PySpark ноутбук:
 ```python
 
-import findspark
-findspark.init()
-
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 
 # Создание сессии с настройками
-spark = SparkSession.builder \\
-    .appName("DataAnalysis") \\
-    .master("local[*]") \\
-    .config("spark.driver.memory", "2g") \\
-    .config("spark.executor.memory", "2g") \\
-    .config("spark.sql.shuffle.partitions", "4") \\
+spark = SparkSession.builder \
+    .appName("DataAnalysis") \
+    .master("local[*]") \
+    .config("spark.driver.memory", "2g") \
+    .config("spark.executor.memory", "2g") \
+    .config("spark.sql.shuffle.partitions", "4") \
     .getOrCreate()
 
 # Пример работы с данными
