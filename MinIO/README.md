@@ -61,8 +61,8 @@ from io import BytesIO
 # Настройка подключения (вариант для сети Docker)
 minio_client = Minio(
     endpoint="host.docker.internal:9000",  # или IP хоста
-    access_key="minioadmin",
-    secret_key="minioadmin",
+    access_key="****USER****",
+    secret_key="****PASSWORD****",
     secure=False
 )
 
@@ -110,8 +110,8 @@ host_ip = socket.gethostbyname('host.docker.internal')
 spark = SparkSession.builder \
     .appName("MinIO-Spark") \
     .config("spark.hadoop.fs.s3a.endpoint", f"http://{host_ip}:9000") \
-    .config("spark.hadoop.fs.s3a.access.key", "minioadmin") \
-    .config("spark.hadoop.fs.s3a.secret.key", "minioadmin") \
+    .config("spark.hadoop.fs.s3a.access.key", "****USER****") \
+    .config("spark.hadoop.fs.s3a.secret.key", "****PASSWORD****") \
     .config("spark.hadoop.fs.s3a.path.style.access", "true") \
     .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
     .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false") \
@@ -140,7 +140,7 @@ alias minio-mc='docker run -it --network host minio/mc:latest'
 
 # Использование MinIO Client (mc)
 docker run -it --network host minio/mc:latest \
-  alias set myminio http://localhost:9000 minioadmin minioadmin
+  alias set myminio http://localhost:9000 ****USER**** ****PASSWORD****
 
 docker run -it --network host minio/mc:latest \
   ls myminio
@@ -165,14 +165,10 @@ docker run -d \
 echo "MinIO запущен:"
 echo "Web UI: http://localhost:9001"
 echo "API: http://localhost:9000"
-echo "Login: minioadmin"
-echo "Password: minioadmin"
-Основные настройки подключения:
-Параметр	Значение для JupyterLab
-Endpoint	host.docker.internal:9000
-Access Key	****USER****
-Secret Key	****PASSWORD****
+echo "Login: ****USER****"
+echo "Password: ****PASSWORD****"
 ```
+
 Bucket URL	s3a://bucket-name/path
 Web UI	http://localhost:9001
 #### **Примечание:**
