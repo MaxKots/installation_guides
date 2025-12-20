@@ -146,6 +146,8 @@ docker images | grep jupyter
 
 ```bash
 
+cd ~/jupyter_projects
+
 # Останавливаем старые контейнеры с таким же именем (если есть)
 docker stop JupyterLab 2>/dev/null
 docker rm JupyterLab 2>/dev/null
@@ -172,6 +174,8 @@ docker run -d \
 <summary><b>Вариант B: Расширенный запуск (с правами root и настройками)</b></summary>
 
 ```bash
+
+cd ~/jupyter_projects
 
 # Удалить старый контейнер если существует
 docker rm -f JupyterLab 2>/dev/null
@@ -213,7 +217,7 @@ docker run -d \
 ```bash
 
 # Создание docker-compose.yml
-cat > docker-compose.yml << 'EOF'
+cat > ~/jupyter_projects/docker-compose.yml << 'EOF'
 version: '3.8'
 
 services:
