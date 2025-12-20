@@ -1,4 +1,4 @@
-## Данный  гайд описывает создание и подключение MinIO к ранее развернутому [JupyterLab со SPARK и Trino](https://github.com/MaxKots/installation_guides/blob/main/Jupyter%20on%20Linux/readme.md)
+## Данный  гайд описывает создание и подключение MinIO к ранее развернутому [JupyterLab со SPARK, R и Scala](https://github.com/MaxKots/installation_guides/blob/main/Jupyter%20on%20Linux/readme.md)
 
 ### 1. Запуск MinIO отдельным контейнером
 ```bash
