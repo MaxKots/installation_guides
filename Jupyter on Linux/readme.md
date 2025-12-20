@@ -180,7 +180,8 @@ docker rm -f JupyterLab 2>/dev/null
 docker run -d \
   --name JupyterLab \
   --hostname jupyter-spark \
-  --add-host minio:host-gateway \  # Это для MinIO
+  # Это для MinIO
+  --add-host minio:host-gateway \
   -p 8888:8888 \
   -p 4040:4040 \
   -p 4041:4041 \
