@@ -238,8 +238,8 @@ services:
       - NB_UID=1000
       - NB_GID=100
       - SPARK_OPTS=--driver-memory 2G --executor-memory 2G
-      # Для MinIO
-      - MINIO_ENDPOINT=http://minio:9000 # Если оба контейнера в одной сети, надежнее - http://localhost:9000
+      # Для MinIO. Если оба контейнера в одной сети, то можно http://minio:9000, хотя надежнее - http://localhost:9000
+      - MINIO_ENDPOINT=http://minio:9000
       - MINIO_ACCESS_KEY=****USER****
       - MINIO_SECRET_KEY=****PASSWORD****
     networks:
