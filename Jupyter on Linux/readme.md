@@ -177,10 +177,10 @@ docker run -d \
 docker rm -f JupyterLab 2>/dev/null
 
 # Запуск с расширенными параметрами
+# + MinIO
 docker run -d \
   --name JupyterLab \
   --hostname jupyter-spark \
-  # Это для MinIO
   --add-host minio:host-gateway \
   -p 8888:8888 \
   -p 4040:4040 \
