@@ -153,6 +153,7 @@ docker rm JupyterLab 2>/dev/null
 # Запускаем новый контейнер
 docker run -d \
   --name JupyterLab \
+  --add-host minio:host-gateway \
   -p 8888:8888 \
   -p 4040:4040 \
   -p 4041:4041 \
@@ -179,6 +180,7 @@ docker rm -f JupyterLab 2>/dev/null
 docker run -d \
   --name JupyterLab \
   --hostname jupyter-spark \
+  --add-host minio:host-gateway \  # Это для MinIO
   -p 8888:8888 \
   -p 4040:4040 \
   -p 4041:4041 \
@@ -236,6 +238,12 @@ services:
       - NB_UID=1000
       - NB_GID=100
       - SPARK_OPTS=--driver-memory 2G --executor-memory 2G
+      # Для MinIO
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESS_KEY=****USER****
+      - MINIO_SECRET_KEY=****PASSWORD****
+    networks:
+      - jupyter-network  # это для minio, чтобы работал в сети юпитера
     user: root
     restart: unless-stopped
     deploy:
@@ -243,7 +251,10 @@ services:
         limits:
           memory: 4G
           cpus: '2.0'
-EOF
+
+networks:
+  jupyter-network:
+    external: true  # существующая сеть для minio
 ```
 </details>
 
